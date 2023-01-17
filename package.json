@@ -1,0 +1,24 @@
+{
+  "name": "twitter-clone-mern-stack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "i" : "cd tests/ && npm i && cd .. && cd socket/ && npm install && cd .. && cd frontend/ && npm install && cd .. && cd backend/ && npm install",
+    "install" : "npm run i"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LakshmiSanikommu/Twitter-Clone.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LakshmiSanikommu/Twitter-Clone/issues"
+  },
+  "homepage": "https://github.com/LakshmiSanikommu/Twitter-Clone#readme"
+}

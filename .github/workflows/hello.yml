@@ -1,0 +1,10 @@
+name : Twitter clone git hub workflow
+
+on:
+  push:
+    branches:
+      - main 
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
