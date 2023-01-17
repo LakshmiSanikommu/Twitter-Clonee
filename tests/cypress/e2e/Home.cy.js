@@ -8,7 +8,6 @@ describe("Testing home", () => {
     cy.url().should("eq", "http://localhost:3000/user/Home");
     cy.screenshot({
       overwrite: true,
-      clip: { x: 0, y: 0, width: "100", height: "100" },
     });
     // cy.get("#tweet_btn").click();
   });
