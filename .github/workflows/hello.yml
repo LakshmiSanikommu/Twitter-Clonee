@@ -21,6 +21,6 @@ jobs:
   goodbye: 
     runs-on: ubuntu-latest
     steps:
-      -name : goodbye 
+      - name : goodbye 
         run : goodbye
         shell: bash
