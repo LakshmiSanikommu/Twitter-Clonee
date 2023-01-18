@@ -9,7 +9,7 @@ jobs :
     runs-on : ubuntu-latest
     steps : 
       - name : issues action
-      run : echo '${{ toJSON(github.event)}}' | jq 
-      shell : bash
+        run : echo '${{ toJSON(github.event)}}' | jq 
+        shell : bash
       
       
