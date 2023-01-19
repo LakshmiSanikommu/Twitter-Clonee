@@ -7,7 +7,7 @@ describe("Testing home", () => {
     cy.get("#tweet_input").type("Hello All");
     cy.url().should("eq", "http://localhost:3000/user/Home");
     cy.screenshot({
-      overwrite: true,
+      // overwrite: true,
     });
     // cy.get("#tweet_btn").click();
   });
