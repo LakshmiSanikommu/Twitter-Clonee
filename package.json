@@ -7,8 +7,9 @@
     "test": "tests"
   },
   "scripts": {
-    "i" : "cd tests/ && npm i && cd .. && cd socket/ && npm install && cd .. && cd frontend/ && npm install && cd .. && cd backend/ && npm install",
-    "install" : "npm run i"
+    "i": "cd tests/ && npm i && cd .. && cd socket/ && npm install && cd .. && cd frontend/ && npm install && cd .. && cd backend/ && npm install",
+    "install": "npm run i",
+    "app": " concurrently 'cd backend/ && npm run dev'    'cd frontend/ && npm run dev'     'cd socket/ && npm run dev' 'cd tests/ && npx cypress open' "
   },
   "repository": {
     "type": "git",
@@ -20,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/LakshmiSanikommu/Twitter-Clone/issues"
   },
-  "homepage": "https://github.com/LakshmiSanikommu/Twitter-Clone#readme"
+  "homepage": "https://github.com/LakshmiSanikommu/Twitter-Clone#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
 }

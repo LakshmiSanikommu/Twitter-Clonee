@@ -14,6 +14,7 @@ import Feed from "../../components/Feed";
 import { useRouter } from "next/router";
 import EditProfileModal from "../../components/EditProfileModal";
 import MessageSearch from "../../components/Messages/MessageSearch";
+import Head from "next/head";
 
 
 function All() {
@@ -43,10 +44,13 @@ function All() {
   };
 
   return (
-    <div className=" max-h-screen overflow-hidden  max-w-6xl mx-auto">
+    <div className=" mx-auto max-h-screen  max-w-6xl overflow-hidden">
+      <Head>
+        <title>{router?.query?.component && router.query.component[0]}</title>
+      </Head>
       <main className="grid grid-cols-9 ">
         <SideBar />
-        <div className=" col-span-7 lg:col-span-5 border-x-[0.1rem] mr-2 overflow-scroll max-h-screen  ">
+        <div className=" col-span-7 mr-2 max-h-screen overflow-scroll border-x-[0.1rem] lg:col-span-5  ">
           {" "}
           {switchComponent(
             router?.query?.component && router.query.component[0]
