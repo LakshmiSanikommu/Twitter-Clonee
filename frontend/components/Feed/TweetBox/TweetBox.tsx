@@ -13,7 +13,7 @@ function TweetBox() {
   const [input, setInput] = useState<string>("");
   const { data: session } = useSession();
   const dispatch = useDispatch();
-  const tweetBoxModalState : Boolean = useSelector(
+  const tweetBoxModalState: Boolean = useSelector(
     (state: any) => state.global.tweetBoxModalState
   );
 
@@ -75,6 +75,7 @@ function TweetBox() {
             )}
 
             <button
+              id="tweet_btn"
               className="m-2 rounded-full bg-twitter p-1 px-3 font-bold text-white disabled:opacity-60"
               disabled={!input || input.length > 256}
               onClick={addDataToMongo}
