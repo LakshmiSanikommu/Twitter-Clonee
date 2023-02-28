@@ -16,6 +16,8 @@ const styles = {
 
 console.log("hello");
 
+console.log("another log")
+
 function Actions({ post }: { post?: postType }) {
   const dispatch = useDispatch();
   return (
