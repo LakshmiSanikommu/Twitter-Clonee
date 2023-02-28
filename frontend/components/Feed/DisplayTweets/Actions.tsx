@@ -15,6 +15,7 @@ const styles = {
 };
 
 console.log("1");
+console.log("2");
 
 function Actions({ post }: { post?: postType }) {
   const dispatch = useDispatch();
