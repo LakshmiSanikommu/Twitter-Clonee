@@ -14,8 +14,6 @@ const styles = {
   icon: " w-[2.3rem] h-[2.3rem] text-gray-600 cursor-pointer  p-2 ",
 };
 
-console.log("hello");
-
 function Actions({ post }: { post?: postType }) {
   const dispatch = useDispatch();
   return (
