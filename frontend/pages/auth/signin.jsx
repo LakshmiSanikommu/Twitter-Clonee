@@ -1,6 +1,7 @@
 import { getProviders, signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
+import { ConnectButton } from "web3uikit";
 
 export default function SignIn({ providers }) {
   return (
@@ -14,7 +15,7 @@ export default function SignIn({ providers }) {
           <h1 className="text-[4rem] font-bold">Happening now</h1>
           <h2 className="text-[2rem] font-bold">Join Twitter today</h2>
           <div className="flex min-w-[15rem] cursor-pointer items-center justify-between rounded-full border p-3 px-6 transition duration-200 active:bg-twitter ">
-            {Object.values(providers).map((provider) => (
+            {Object?.values(providers).map((provider) => (
               //   Here we are looping through all the authentication providers
               <div key={provider.name}>
                 <button
@@ -25,6 +26,9 @@ export default function SignIn({ providers }) {
               </div>
             ))}
             <FcGoogle className="h-[1.5rem] w-[1.5rem]" />
+          </div>
+          <div>
+            <ConnectButton/>
           </div>
         </div>
       </div>

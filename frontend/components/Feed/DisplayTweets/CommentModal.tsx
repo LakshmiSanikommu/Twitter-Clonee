@@ -68,6 +68,7 @@ export default function CommentModal() {
               src={post?.userImage || "https://links.papareact.com/drq"}
               width="45"
               height="45"
+              alt="userImage"
             ></Image>
             <div className="h-[3rem] border-[0.1rem] my-2"></div>
             <Image
@@ -75,6 +76,7 @@ export default function CommentModal() {
               src={session?.user?.image || "https://links.papareact.com/drq"}
               width="45"
               height="45"
+              alt="userImage"
             ></Image>
           </div>
           <div className="p-2">

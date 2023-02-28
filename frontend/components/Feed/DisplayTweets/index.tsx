@@ -15,6 +15,7 @@ function DisplayTweets({ post } : {post : postType} ) {
             layout="fill"
             className=" rounded-full "
             src={post?.userImage}
+            alt="poat"
           ></Image>
         </div>
 

@@ -5,6 +5,8 @@ import { SessionProvider } from "next-auth/react";
 import { Provider } from "react-redux";
 import store from "../Redux/app/store";
 import DataProvider from "../context/DataContext";
+import { MoralisProvider } from "react-moralis";
+import { NotificationProvider } from "web3uikit";
 
 // need to learn about this Session type
 function MyApp({
@@ -15,7 +17,11 @@ function MyApp({
     <SessionProvider session={session}>
       <Provider store={store}>
         <DataProvider>
-          <Component {...pageProps} />
+          <MoralisProvider initializeOnMount={false}>
+            <NotificationProvider>
+              <Component {...pageProps} />
+            </NotificationProvider>
+          </MoralisProvider>
         </DataProvider>
       </Provider>
     </SessionProvider>
