@@ -13,8 +13,6 @@ import { AiOutlineLink } from "react-icons/ai";
 import axiosAPI from "../axios.js";
 import { postType, profileType } from "../Types/Feed.types";
 
-
-
 function Profile() {
   const { data: session } = useSession();
   const [profilePosts, setProfilePosts] = useState([]);
@@ -64,12 +62,10 @@ function Profile() {
     <div className="flex flex-col">
       <div className="flex gap-3">
         <Link passHref href={"/"}>
-          <a>
-            <IoArrowBackSharp
-              title="back"
-              className="cursor-pointer rounded-full p-1 text-[2.3rem] hover:bg-gray-300"
-            />
-          </a>
+          <IoArrowBackSharp
+            title="back"
+            className="cursor-pointer rounded-full p-1 text-[2.3rem] hover:bg-gray-300"
+          />
         </Link>
 
         <section>
