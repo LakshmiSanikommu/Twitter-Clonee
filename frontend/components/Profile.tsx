@@ -6,14 +6,12 @@ import { useSession } from "next-auth/react";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
 import DisplayTweets from "./Feed/DisplayTweets";
-import { useDispatch, useSelector  } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editProfileModal } from "../Redux/features/GlobalSlice";
 import { useRouter } from "next/router";
 import { AiOutlineLink } from "react-icons/ai";
 import axiosAPI from "../axios.js";
 import { postType, profileType } from "../Types/Feed.types";
-
-
 
 function Profile() {
   const { data: session } = useSession();
@@ -21,12 +19,13 @@ function Profile() {
   const [profileData, setProfileData] = useState<profileType>();
   const router = useRouter();
   const profileDataChanged = useSelector(
-    (state : any) => state.global.profileDataChanged
+    (state: any) => state.global.profileDataChanged
   );
   const newUserId = router?.query?.component && router?.query?.component[1];
-  const dataChanged = useSelector((state : any  ) => state.global.dataChanged);
+  const dataChanged = useSelector((state: any) => state.global.dataChanged);
   const userId: string | null =
-    newUserId || JSON.parse(window.sessionStorage.getItem("userId")??"")?.userId;
+    newUserId ||
+    JSON.parse(window.sessionStorage.getItem("userId") ?? "")?.userId;
   const dispatch = useDispatch();
   useEffect(() => {
     // ----------------------   profile creation if not exists ------------------------------------
@@ -63,12 +62,10 @@ function Profile() {
     <div className="flex flex-col">
       <div className="flex gap-3">
         <Link passHref href={"/"}>
-          <a>
-            <IoArrowBackSharp
-              title="back"
-              className="cursor-pointer rounded-full p-1 text-[2.3rem] hover:bg-gray-300"
-            />
-          </a>
+          <IoArrowBackSharp
+            title="back"
+            className="cursor-pointer rounded-full p-1 text-[2.3rem] hover:bg-gray-300"
+          />
         </Link>
 
         <section>
@@ -91,6 +88,7 @@ function Profile() {
             className="rounded-full"
             layout="fill"
             src={profileData?.userImage || "https://links.papareact.com/drq"}
+            alt="profile image"
           ></Image>
         </div>
 

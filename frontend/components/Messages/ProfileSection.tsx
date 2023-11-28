@@ -43,6 +43,7 @@ function ProfileSection({ profile, online } : propsType) {
             layout="fill"
             className="rounded-full "
             src={profile?.userImage || "https://links.papareact.com/drq"}
+            alt="image"
           ></Image>
         </div>
 

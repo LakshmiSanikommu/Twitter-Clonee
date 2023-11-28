@@ -13,7 +13,7 @@ function Feed() {
 
   useEffect(() => {
     const getPosts = async () => {
-      const data = await fetch("http://localhost:5000/tweets").then((res) =>
+      const data = await fetch("http://localhost:8001/tweets").then((res) =>
         res.json()
       );
       setAllPosts(data);
@@ -41,7 +41,7 @@ export default Feed;
 // need to implement data fetching in the getserver side props
 
 // export async function getStaticProps() {
-//     const data = await fetch("http://localhost:5000/tweets").then((res) =>
+//     const data = await fetch("http://localhost:8001/tweets").then((res) =>
 //       res.json()
 //     );
 //   console.log("😇 data"+data)

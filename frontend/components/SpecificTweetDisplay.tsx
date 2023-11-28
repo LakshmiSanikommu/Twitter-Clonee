@@ -13,13 +13,12 @@ import { useRouter } from "next/router";
 import axiosAPI from "../axios";
 import { postType } from "../Types/Feed.types";
 
-function SpecificTweetDisplay({ post } : { post : postType}) {
+function SpecificTweetDisplay({ post }: { post: postType }) {
   const [replyInput, setReplyInput] = useState("");
   const { data: session } = useSession();
   const router = useRouter();
   const dispatch = useDispatch();
-
-  console.log("post from server side props " + post);
+  console.log(post);
 
   const data = {
     postId: post?._id,
@@ -58,6 +57,7 @@ function SpecificTweetDisplay({ post } : { post : postType}) {
           height={50}
           width={50}
           src={post?.userImage || "https://links.papareact.com/drq"}
+          alt="user image"
         ></Image>
         <div>
           <p className="font-[600]">{post?.userName}</p>
@@ -78,6 +78,7 @@ function SpecificTweetDisplay({ post } : { post : postType}) {
           src={session?.user?.image || "https://links.papareact.com/drq"}
           width="45"
           height="45"
+          alt="user image"
         ></Image>
         <input
           value={replyInput}

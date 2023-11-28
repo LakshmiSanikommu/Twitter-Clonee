@@ -7,22 +7,22 @@ function Widgets() {
   const [search, setSearch] = useState();
   const [profiles, setProfiles] = useState();
   function clearInput() {
-    setSearch("")
+    setSearch("");
   }
   useEffect(() => {
     async function dataFetching() {
-      const data = await fetch("http://localhost:5000/profile").then((res) =>
+      const data = await fetch("http://localhost:8001/profile").then((res) =>
         res.json()
       );
       setProfiles(data);
     }
     dataFetching();
   }, []);
- 
+
   return (
-    <div className=" col-span-2 hidden lg:inline pt-2 mr-2 ">
-      <div className="flex  bg-gray-200 p-2 text-gray-500 rounded-full">
-        <IoSearch className="w-[2rem] h-[2rem]   " />
+    <div className=" col-span-2 mr-2 hidden pt-2 lg:inline ">
+      <div className="flex  rounded-full bg-gray-200 p-2 text-gray-500">
+        <IoSearch className="h-[2rem] w-[2rem]   " />
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -32,13 +32,18 @@ function Widgets() {
         />
       </div>
       {search && (
-        <div className=" min-h-[25rem] rounded-lg shadow-[2px_4px_12px_6px_rgba(118,217,255,0.5)]   mt-2 flex gap-3 flex-col p-2 ">
-          {profiles?.filter((profile) => profile.userId.includes(search)).length ? (
+        <div className=" mt-2 flex min-h-[25rem]   flex-col gap-3 rounded-lg p-2 shadow-[2px_4px_12px_6px_rgba(118,217,255,0.5)] ">
+          {profiles?.filter((profile) => profile.userId.includes(search))
+            .length ? (
             profiles
               ?.filter((profile) => profile.userId.includes(search))
               .map((profile) => (
                 // <ProfileSection key={profile._id} profile={profile} />
-                <ViewProfile key={profile._id} profile={profile} clearInput={clearInput} />
+                <ViewProfile
+                  key={profile._id}
+                  profile={profile}
+                  clearInput={clearInput}
+                />
               ))
           ) : (
             <div className=" p-4"> no results found for {search} </div>

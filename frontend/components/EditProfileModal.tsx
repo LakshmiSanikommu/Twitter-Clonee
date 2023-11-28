@@ -7,9 +7,7 @@ import {
 } from "../Redux/features/GlobalSlice";
 import { useSession } from "next-auth/react";
 import axiosAPI from "../axios";
-import { profileType} from  "../Types/Feed.types"
-
-
+import { profileType } from "../Types/Feed.types";
 
 const styles = {
   div: " border m-2 rounded-md p-1  ",
@@ -20,8 +18,10 @@ const styles = {
 function EditProfileModal() {
   const { data: session } = useSession();
   const dispatch = useDispatch();
-  const [profileData, setProfileData] = useState({} as profileType );
-  const userId : string = JSON.parse(window.sessionStorage.getItem("userId")??"").userId;
+  const [profileData, setProfileData] = useState({} as profileType);
+  const userId: string = JSON.parse(
+    window.sessionStorage.getItem("userId") ?? ""
+  ).userId;
 
   useEffect(() => {
     // -------------------------------------------- fetching Profile Data --------------------
@@ -40,7 +40,7 @@ function EditProfileModal() {
     location: "",
     website: "",
     userId: userId,
-    birthDate : new Date(),
+    birthDate: new Date(),
     userImage: session?.user?.image,
     backgroundImage: "",
   });
@@ -58,11 +58,11 @@ function EditProfileModal() {
       });
   }, [profileData, session]);
   const editProfileModalState = useSelector(
-    (state : any) => state.global.editProfileModalState
+    (state: any) => state.global.editProfileModalState
   );
 
   async function handleSave() {
-    const res = await fetch("http://localhost:5000/profile", {
+    const res = await fetch("http://localhost:8001/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

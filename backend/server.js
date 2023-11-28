@@ -11,7 +11,7 @@ app.use(express.json());
 
 const upload = multer({ dest: "uploads/" });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8001;
 
 async function main() {
   // -----------------------------------   Mongo DB ---------------------------------------
@@ -215,7 +215,7 @@ async function main() {
   // ------------------------------------- profile Data --------------------
   app.route("/profiledata").post(async function (req, res) {
     let data = await Profile.findOne({ userId: req.body.userId });
-    console.log("profile data"+data)
+    console.log("profile data" + data);
     res.send(data);
   });
 
@@ -257,16 +257,19 @@ async function main() {
     res.send("successfully");
   });
 
-
   app.route("/conversation").post(async (req, res) => {
-    let allMessages = []
-    await Conversation.findOne({ conversationId: req.body.conversationId }).then(value => {
+    let allMessages = [];
+    await Conversation.findOne({
+      conversationId: req.body.conversationId,
+    }).then((value) => {
       allMessages = value?.messages;
-      console.log("all messages with conversation id : " + req.body.conversationId)
-      console.log()
-    })
-    res.send(allMessages)
-  })
+      console.log(
+        "all messages with conversation id : " + req.body.conversationId
+      );
+      console.log();
+    });
+    res.send(allMessages);
+  });
 
   // ---------------------------------------- Messages ------------------------
   app.route("/message").post(async ({ body }, res) => {
@@ -338,5 +341,5 @@ main().catch((err) => console.log(err));
 // });
 
 app.listen(PORT, () => {
-  console.log("listening on port 5000 ");
+  console.log("listening on port 8001 ");
 });

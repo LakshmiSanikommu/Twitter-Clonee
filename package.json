@@ -9,7 +9,8 @@
   "scripts": {
     "i": "cd tests/ && npm i && cd .. && cd socket/ && npm install && cd .. && cd frontend/ && npm install && cd .. && cd backend/ && npm install",
     "install": "npm run i",
-    "app": " concurrently 'cd backend/ && npm run dev'    'cd frontend/ && npm run dev'     'cd socket/ && npm run dev' 'cd tests/ && npx cypress open' "
+    "app": " concurrently 'cd backend/ && npm run dev'  'cd frontend/ && npm run dev' 'cd socket/ && npm run dev' ",
+    "cypress": "'cd tests/ && npx cypress open'"
   },
   "repository": {
     "type": "git",
