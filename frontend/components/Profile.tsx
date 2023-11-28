@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { MdOutlineBusinessCenter } from "react-icons/md";
 import { GoCalendar } from "react-icons/go";
 import DisplayTweets from "./Feed/DisplayTweets";
-import { useDispatch, useSelector  } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editProfileModal } from "../Redux/features/GlobalSlice";
 import { useRouter } from "next/router";
 import { AiOutlineLink } from "react-icons/ai";
@@ -21,12 +21,13 @@ function Profile() {
   const [profileData, setProfileData] = useState<profileType>();
   const router = useRouter();
   const profileDataChanged = useSelector(
-    (state : any) => state.global.profileDataChanged
+    (state: any) => state.global.profileDataChanged
   );
   const newUserId = router?.query?.component && router?.query?.component[1];
-  const dataChanged = useSelector((state : any  ) => state.global.dataChanged);
+  const dataChanged = useSelector((state: any) => state.global.dataChanged);
   const userId: string | null =
-    newUserId || JSON.parse(window.sessionStorage.getItem("userId")??"")?.userId;
+    newUserId ||
+    JSON.parse(window.sessionStorage.getItem("userId") ?? "")?.userId;
   const dispatch = useDispatch();
   useEffect(() => {
     // ----------------------   profile creation if not exists ------------------------------------
@@ -91,6 +92,7 @@ function Profile() {
             className="rounded-full"
             layout="fill"
             src={profileData?.userImage || "https://links.papareact.com/drq"}
+            alt="profile image"
           ></Image>
         </div>
 
