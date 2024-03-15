@@ -1,14 +1,26 @@
-import { ethers } from "hardhat"
+import { ethers, network } from "hardhat"
+import { verify } from "./reusable"
 
 const main = async () => {
     const Twitter = await ethers.getContractFactory("Twitter")
     console.log(" Deploying Twitter contract ")
     const twitter = await Twitter.deploy()
     await twitter.waitForDeployment()
-    const address = await twitter.getAddress()
+    const contractAddress = await twitter.getAddress()
     const owner = await twitter.getOwner()
-    console.log(address)
-    console.log(owner)
+    console.log(" address : " + contractAddress)
+    console.log(" owner : " + owner)
+
+    // verifying in sepolia network
+    if (network.config.chainId === 11155111) {
+        await verify(contractAddress, [])
+    }
+
+    const transactionResponse = await twitter.storeMsg("Hello")
+    transactionResponse.wait(6)
+    await twitter.storeMsg("Hellooooo")
+    const allMessages = await twitter.retriveMessages()
+    console.log(" all messages : " + allMessages)
 }
 
 main()

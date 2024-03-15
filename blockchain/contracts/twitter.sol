@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity 0.8.8;
 import "hardhat/console.sol";
 
 contract Twitter {
     address public immutable i_owner;
     uint256 public constant PER_TWEET = 0.02 * 10 ** 8;
+    string[] public msgStore;
 
     constructor() {
         i_owner = msg.sender;
@@ -14,7 +16,15 @@ contract Twitter {
         require(msg.value > PER_TWEET, " U need to pay 0.02 ETH for Tweet");
     }
 
-    function getOwner() public view returns(address) {
+    function getOwner() public view returns (address) {
         return i_owner;
+    }
+
+    function storeMsg(string memory _input) public {
+        msgStore.push(_input);
+    }
+
+    function retriveMessages() public view returns (string[] memory) {
+        return msgStore;
     }
 }
