@@ -3,10 +3,17 @@
 pragma solidity 0.8.8;
 import "hardhat/console.sol";
 
+error Twitter_NotOwner();
+
 contract Twitter {
     address public immutable i_owner;
-    uint256 public constant PER_TWEET = 0.02 * 10 ** 8;
+    uint256 public constant PER_TWEET = 0.02 * 10 ** 18;
     string[] public msgStore;
+
+    modifier onlyOwner() {
+        if (msg.sender != i_owner) revert Twitter_NotOwner();
+        _;
+    }
 
     constructor() {
         i_owner = msg.sender;
@@ -26,5 +33,19 @@ contract Twitter {
 
     function retriveMessages() public view returns (string[] memory) {
         return msgStore;
+    }
+
+    function perTweetCost() public pure returns (uint256) {
+        return PER_TWEET;
+    }
+
+    function withdraw() public onlyOwner {
+
+        // const res = ether.tr
+
+
+
+
+
     }
 }

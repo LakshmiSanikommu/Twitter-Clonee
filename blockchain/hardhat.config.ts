@@ -4,16 +4,18 @@ import "dotenv/config"
 import "@nomicfoundation/hardhat-verify"
 import "./tasks/show-balance"
 import "./tasks/block-number"
+import "hardhat-gas-reporter"
 
 task("accounts", "prints the list of the accounts ", async (taskargs, hre) => {
     const accounts = await hre.ethers.getSigners()
     accounts.forEach((account) => console.log(account.address))
 })
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY
+const PRIVATE_KEY = process.env.PRIVATE_KEY || "0xkey"
 const SEPOLIA_URL = process.env.SEPOLIA_URL
 const MAINNET_URL = process.env.MAINNET_URL
 const ETHER_SCAN_API = process.env.ETHER_SCAN_API
+const COINMARKET_CAP_API = process.env.COINMARKET_CAP_API
 
 const config: HardhatUserConfig = {
     defaultNetwork: "hardhat",
@@ -42,6 +44,14 @@ const config: HardhatUserConfig = {
     },
     sourcify: {
         enabled: false,
+    },
+    gasReporter: {
+        enabled: true,
+        outputFile: "gasReport.txt",
+        currency: "USD",
+        noColors: true,
+        coinmarketcap: COINMARKET_CAP_API,
+        token: "MATIC",
     },
 }
 
