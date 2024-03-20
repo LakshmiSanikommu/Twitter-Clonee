@@ -7,9 +7,7 @@ module.exports = async () => {
 }
 
 async function updateContractAddresses() {
-
     // const Twitter = ethers.getContractAt("Twitter");
-
 }
 
 module.exports.tags = ["all", "updateFE"]

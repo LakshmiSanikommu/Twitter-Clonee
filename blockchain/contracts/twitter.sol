@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity 0.8.8;
+pragma solidity ^0.8.0;
 import "hardhat/console.sol";
 
 error Twitter_NotOwner();
 
 contract Twitter {
     address public immutable i_owner;
-    uint256 public constant PER_TWEET = 0.02 * 10 ** 18;
+    uint256 public constant PER_TWEET = 10 * 10 ** 18; // per tweet 10 dollars
+
     string[] public msgStore;
 
     modifier onlyOwner() {
@@ -40,12 +41,6 @@ contract Twitter {
     }
 
     function withdraw() public onlyOwner {
-
         // const res = ether.tr
-
-
-
-
-
     }
 }

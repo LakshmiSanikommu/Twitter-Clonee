@@ -5,6 +5,8 @@ import "@nomicfoundation/hardhat-verify"
 import "./tasks/show-balance"
 import "./tasks/block-number"
 import "hardhat-gas-reporter"
+import "solidity-coverage"
+import "hardhat-deploy"
 
 task("accounts", "prints the list of the accounts ", async (taskargs, hre) => {
     const accounts = await hre.ethers.getSigners()
@@ -37,7 +39,11 @@ const config: HardhatUserConfig = {
         },
     },
     solidity: {
-        compilers: [{ version: "0.8.8" }, { version: "0.8.2" }],
+        compilers: [
+            { version: "0.8.8" },
+            { version: "0.8.2" },
+            { version: "0.8.0" },
+        ],
     },
     etherscan: {
         apiKey: ETHER_SCAN_API,

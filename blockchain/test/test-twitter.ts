@@ -1,10 +1,13 @@
 import { ethers } from "hardhat"
 import { assert, expect } from "chai"
+import { Twitter, Twitter__factory } from "../typechain-types"
 
 describe("running Twitter tests ", async () => {
-    let twitter: any
+    let Twitter: Twitter__factory
+    let twitter: Twitter
+
     beforeEach(async () => {
-        const Twitter = await ethers.getContractFactory("Twitter")
+        Twitter = await ethers.getContractFactory("Twitter")
         twitter = await Twitter.deploy()
     })
 
