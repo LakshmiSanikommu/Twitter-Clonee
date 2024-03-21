@@ -14,6 +14,7 @@ task("accounts", "prints the list of the accounts ", async (taskargs, hre) => {
 })
 
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "0xkey"
+const PRIVATE_KEY_2 = process.env.PRIVATE_KEY_2 || "0xkey"
 const SEPOLIA_URL = process.env.SEPOLIA_URL
 const MAINNET_URL = process.env.MAINNET_URL
 const ETHER_SCAN_API = process.env.ETHER_SCAN_API
@@ -24,13 +25,15 @@ const config: HardhatUserConfig = {
     networks: {
         sepolia: {
             url: SEPOLIA_URL,
-            accounts: PRIVATE_KEY != undefined ? [PRIVATE_KEY] : [],
+            accounts:
+                PRIVATE_KEY != undefined ? [PRIVATE_KEY, PRIVATE_KEY_2] : [],
             chainId: 11155111,
         },
         mainnet: {
             chainId: 1,
             url: MAINNET_URL,
-            accounts: PRIVATE_KEY != undefined ? [PRIVATE_KEY] : [],
+            accounts:
+                PRIVATE_KEY != undefined ? [PRIVATE_KEY, PRIVATE_KEY_2] : [],
         },
         localhost: {
             url: "http://127.0.0.1:8545/",
@@ -58,6 +61,14 @@ const config: HardhatUserConfig = {
         noColors: true,
         coinmarketcap: COINMARKET_CAP_API,
         token: "MATIC",
+    },
+    namedAccounts: {
+        lucky: {
+            default: 0,
+        },
+        kiran: {
+            default: 1,
+        },
     },
 }
 

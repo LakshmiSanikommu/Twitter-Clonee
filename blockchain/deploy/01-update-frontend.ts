@@ -2,7 +2,7 @@ import { ethers } from "hardhat"
 
 module.exports = async () => {
     if (process.env.UPDATE_FE) {
-        console.log(" updating address and abi in frontend")
+        // console.log(" updating address and abi in frontend")
     }
 }
 
