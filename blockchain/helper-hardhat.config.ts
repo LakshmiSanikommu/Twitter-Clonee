@@ -30,4 +30,14 @@ const networkConfig = {
 const DECIMALS = 8
 const INITIAL_ANSWER = 340000000000
 
-export { networkConfig, developmentChains, DECIMALS, INITIAL_ANSWER }
+const frontEndAbiFile = "../frontend/constants/abi.json"
+const frontEndContractAddresses = "../frontend/constants/contractAddresses.json"
+
+export {
+    networkConfig,
+    developmentChains,
+    DECIMALS,
+    INITIAL_ANSWER,
+    frontEndAbiFile,
+    frontEndContractAddresses,
+}

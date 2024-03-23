@@ -4,7 +4,7 @@ import { network } from "hardhat"
 import { networkConfig } from "../helper-hardhat.config.ts"
 import { verify } from "../scripts/reusable.ts"
 
-module.exports = async ({
+const deployTwitter: DeployFunction = async ({
     getNamedAccounts,
     deployments,
 }: HardhatRuntimeEnvironment) => {
@@ -35,3 +35,6 @@ module.exports = async ({
         verify(twitterAddress, [])
     }
 }
+
+export default deployTwitter
+deployTwitter.tags = ["all", "deployTwitter"]
