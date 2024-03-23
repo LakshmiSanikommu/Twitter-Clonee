@@ -12,6 +12,7 @@ import { tweetBoxModal } from "../../Redux/features/GlobalSlice";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
+import { FaDonate } from "react-icons/fa";
 
 function SideBar() {
   const { data: session } = useSession();
@@ -38,6 +39,7 @@ function SideBar() {
         <SideBarItem Icon={BsCardList} text="Lists" />
         <SideBarItem Icon={HiOutlineUser} text="Profile" />
         <SideBarItem Icon={CgMoreO} text="More" />
+        <SideBarItem Icon={FaDonate} text="FundMe" />
         <div
           onClick={() => dispatch(tweetBoxModal())}
           className=" tweetButton "

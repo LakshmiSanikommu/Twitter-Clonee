@@ -56,10 +56,11 @@ contract Twitter {
         (bool success, bytes memory data) = payable(msg.sender).call{
             value: address(this).balance
         }("");
+        reqire(success, " withdraw failed ")
     }
 
     function fund() public payable {
-        uint256 MIN_DONATE_AMT = 100 * 10 ** 18;
+        uint256 MIN_DONATE_AMT = 100 * 10**18;
         require(
             msg.value.getConversitionRate(s_priceFeed) > MIN_DONATE_AMT,
             " Minimum donation amount is 100 dollars"
