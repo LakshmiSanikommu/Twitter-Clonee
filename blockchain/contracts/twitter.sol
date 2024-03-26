@@ -56,7 +56,7 @@ contract Twitter {
         (bool success, bytes memory data) = payable(msg.sender).call{
             value: address(this).balance
         }("");
-        reqire(success, " withdraw failed ")
+        require(success, " withdraw failed ");
     }
 
     function fund() public payable {

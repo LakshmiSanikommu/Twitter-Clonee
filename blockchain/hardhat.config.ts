@@ -19,6 +19,7 @@ const SEPOLIA_URL = process.env.SEPOLIA_URL
 const MAINNET_URL = process.env.MAINNET_URL
 const ETHER_SCAN_API = process.env.ETHER_SCAN_API
 const COINMARKET_CAP_API = process.env.COINMARKET_CAP_API
+const FORKED_MAINNET_URL = process.env.FORKED_MAINNET_URL || ""
 
 const config: HardhatUserConfig = {
     defaultNetwork: "hardhat",
@@ -40,12 +41,21 @@ const config: HardhatUserConfig = {
             chainId: 31337, // same as hardhat node
             // accounts will be provided by harhat
         },
+        hardhat: {
+            forking: {
+                url: FORKED_MAINNET_URL,
+            },
+            chainId: 31337,
+        },
     },
     solidity: {
         compilers: [
             { version: "0.8.8" },
             { version: "0.8.2" },
             { version: "0.8.0" },
+            { version: "0.6.12" },
+            { version: "0.6.6" },
+            { version: "0.4.19" },
         ],
     },
     etherscan: {

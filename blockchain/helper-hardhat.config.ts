@@ -5,6 +5,7 @@ const networkConfig = {
         name: "mainnet",
         ethUsdPriceFeed: "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
         blockConfirmations,
+        wethAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     },
     11155111: {
         name: "sepolia",
@@ -24,6 +25,7 @@ const networkConfig = {
     31337: {
         name: "hardhat",
         blockConfirmations: 0,
+        wethAddress: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", // mainnet weth address , using it here with the help of forked mainnet
     },
 }
 
