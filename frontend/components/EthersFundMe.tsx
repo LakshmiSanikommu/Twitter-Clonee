@@ -17,17 +17,20 @@ function FundMe() {
         const networkConfig = await provider.getNetwork();
         const chainId = networkConfig.chainId;
         const contractAddress = contractAddresses[Number(chainId)];
+        console.log(contractAddress);
         const signer = await provider.getSigner();
-        contract = new ethers.Contract(contractAddress, abi, signer);
-        // contractOwner = await contract.getOwner();
-        contractBalance = Number(await provider.getBalance(contractAddress));
-        console.log(
-          await contract.s_addressToAmountFunded(
-            "0xE959A2c1c3F108697c244b98C71803b6DcD77764"
-          )
-        );
-        // setFunders(await contract.s_addressToAmountFunded);
-        console.log({ chainId, contractAddress, contractBalance });
+        if (contractAddress) {
+          contract = new ethers.Contract(contractAddress, abi, signer);
+          // contractOwner = await contract.getOwner();
+          contractBalance = Number(await provider.getBalance(contractAddress));
+          console.log(
+            await contract.s_addressToAmountFunded(
+              "0xE959A2c1c3F108697c244b98C71803b6DcD77764"
+            )
+          );
+          // setFunders(await contract.s_addressToAmountFunded);
+          console.log({ chainId, contractAddress, contractBalance });
+        }
       } else {
         console.log("install metamask extension");
       }
