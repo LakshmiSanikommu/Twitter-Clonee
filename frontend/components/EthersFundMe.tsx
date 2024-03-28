@@ -1,37 +1,50 @@
 import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { ethers, TransactionResponse } from "ethers";
 import abi from "../constants/abi.json";
 import contractAddresses from "../constants/contractAddresses.json";
 
-type dataType = {
-  contract: ethers.Contract;
+type DataType = {
   contractBalance: number;
   contractOwner: string;
-  connectedAccount: string;
+  connectedAccounts: Array<string>;
+  contractAddress: string;
+};
+
+type MeatamaskType = {
+  contract: ethers.Contract;
+  signer: ethers.Signer;
+  provider: ethers.Provider;
 };
 
 function FundMe() {
   const [fundAmt, setFundAmt] = useState("");
   const [addressToAmtFunded, setAddressToAmtFunded] = useState([]);
-  const [data, setData] = useState<dataType>({
-    contract: null,
+  const [metamask, setMetamask] = useState<MeatamaskType>({});
+  const [update, setUpdate] = useState(0);
+  const [data, setData] = useState<DataType>({
     contractBalance: 0,
     contractOwner: "",
-    connectedAccount: "",
+    connectedAccounts: [],
+    contractAddress: "",
   });
-  const { contract, contractBalance, contractOwner, connectedAccount } = data;
+  let { contractBalance, contractOwner, connectedAccounts, contractAddress } =
+    data;
+  const { provider, signer, contract } = metamask;
 
-  // useEffect(() => {
-  //   if (window.ethereum) {
-  //     (async () => {
-  //       const { ethereum } = window;
-  //       const connectedAccount = await ethereum.request({
-  //         method: "eth_requestAccounts",
-  //       });
-  //       connectedAccount && setData({ ...data, connectedAccount });
-  //     })();
-  //   }
-  // }, [window.ethereum]);
+  useEffect(() => {
+    if (window.ethereum) {
+      (async () => {
+        const { ethereum } = window;
+        const connectedAccounts = (await ethereum.request({
+          method: "eth_requestAccounts",
+        })) as Array<string>;
+        setData((prev) => ({ ...prev, connectedAccounts }));
+        window.ethereum.on("accountsChanged", () => {
+          window.location.reload();
+        });
+      })();
+    }
+  }, [window.ethereum]);
 
   useEffect(() => {
     (async function () {
@@ -39,48 +52,66 @@ function FundMe() {
         const provider = new ethers.BrowserProvider(window.ethereum);
         const networkConfig = await provider.getNetwork();
         const chainId = networkConfig.chainId;
-        const contractAddress = contractAddresses[Number(chainId)];
+        contractAddress = contractAddresses[Number(chainId)];
+        setData((prev) => ({ ...prev, contractAddress }));
         const signer = await provider.getSigner();
         if (contractAddress) {
           let contract = new ethers.Contract(contractAddress, abi, signer);
-          setData((prev) => ({ ...prev, contract }));
+          setMetamask((prev) => ({ ...prev, contract, provider, signer }));
           let tempOwner = await contract.getOwner();
           let tempBalance = Number(await provider.getBalance(contractAddress));
-          setData({ ...data, contractBalance: tempBalance });
-          setData({ ...data, contractOwner: tempOwner });
-          let allFunders = await contract.getAllFunders();
-          let temp1 = await Promise.all(
-            allFunders.map(async (funder) => {
-              let fundedAmt = await contract.s_addressToAmountFunded(funder);
-              return { [funder]: fundedAmt };
-            })
-          );
+          setData((prev) => ({ ...prev, contractBalance: tempBalance }));
+          setData((prev) => ({ ...prev, contractOwner: tempOwner }));
         }
       } else {
         console.log("install metamask extension");
       }
     })();
   }, []);
-  console.log(data);
+
+  useEffect(() => {
+    (async () => {
+      let allFunders = await contract?.getAllFunders();
+      console.log({ allFunders });
+      if (allFunders) {
+        let temp1 = await Promise.all(
+          allFunders.map(async (funder) => {
+            let fundedAmt = await contract.s_addressToAmountFunded(funder);
+            return { [funder]: fundedAmt };
+          })
+        );
+        console.log({ temp1 });
+      }
+    })();
+  }, [update, contract]);
 
   async function Fund() {
     try {
-      const transactionResponse = await contract.fund({
+      const transactionResponse: TransactionResponse = await contract?.fund({
         value: ethers.parseEther(fundAmt),
       });
+      await transactionResponse.wait(1);
+      const newbalance = Number(await provider.getBalance(contractAddress));
+      setData((prev) => ({ ...prev, contractBalance: newbalance }));
     } catch (err) {
       console.log({ err });
       alert(err.shortMessage);
+      // if (err.shortMessage.inclues("coavlence")) {
+      //   console.log(" delete activity data in the metamask advanced settings");
+      // }
     }
+    setUpdate(update + 1);
   }
   async function Withdraw() {
-    const transactionResponse = await contract.withdraw();
-    console.log(transactionResponse);
+    const transactionResponse = await contract?.withdraw();
+    await transactionResponse.wait(1);
+    const newbalance = Number(await provider.getBalance(contractAddress));
+    setData((prev) => ({ ...prev, contractBalance: newbalance }));
   }
 
   return (
     <div className=" flex flex-col gap-4">
-      <p className=" text-end ">connectedAccount : {connectedAccount}</p>
+      <p className=" text-end ">connectedAccount : {connectedAccounts[0]}</p>
       <h1 className=" text-center font-bold text-green-600 "> FundMe </h1>
       <p> contract Balance : {contractBalance}</p>
       <p> contract Owner : {contractOwner}</p>
