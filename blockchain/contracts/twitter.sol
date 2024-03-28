@@ -53,7 +53,7 @@ contract Twitter {
 
     function withdraw() public payable onlyOwner {
         // payable(msg.sender).transfer(address(this).balance);
-        (bool success, bytes memory data) = payable(msg.sender).call{
+        (bool success,) = payable(msg.sender).call{
             value: address(this).balance
         }("");
         require(success, " withdraw failed ");
@@ -68,4 +68,17 @@ contract Twitter {
         s_funders.push(msg.sender);
         s_addressToAmountFunded[msg.sender] = msg.value;
     }
+
+    function getAllFunders() public view returns( address[] memory ) {
+        return s_funders;
+    }
+
+    //     function retrieveFunders( address[] addresses) public view returns() {
+    //     uint256 length = s_addressToAmountFunded.length
+    //     uint256[] memory 
+    //     for(let i = 0; i < length; i++){
+
+    //     }
+
+    // }
 }

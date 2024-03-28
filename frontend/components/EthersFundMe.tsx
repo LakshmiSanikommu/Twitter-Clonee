@@ -3,12 +3,35 @@ import { ethers } from "ethers";
 import abi from "../constants/abi.json";
 import contractAddresses from "../constants/contractAddresses.json";
 
+type dataType = {
+  contract: ethers.Contract;
+  contractBalance: number;
+  contractOwner: string;
+  connectedAccount: string;
+};
+
 function FundMe() {
-  let contractBalance = 0;
-  // let contractOwner = "asdf";
   const [fundAmt, setFundAmt] = useState("");
-  const [funders, setFunders] = useState("");
-  let contract: ethers.Contract;
+  const [addressToAmtFunded, setAddressToAmtFunded] = useState([]);
+  const [data, setData] = useState<dataType>({
+    contract: null,
+    contractBalance: 0,
+    contractOwner: "",
+    connectedAccount: "",
+  });
+  const { contract, contractBalance, contractOwner, connectedAccount } = data;
+
+  // useEffect(() => {
+  //   if (window.ethereum) {
+  //     (async () => {
+  //       const { ethereum } = window;
+  //       const connectedAccount = await ethereum.request({
+  //         method: "eth_requestAccounts",
+  //       });
+  //       connectedAccount && setData({ ...data, connectedAccount });
+  //     })();
+  //   }
+  // }, [window.ethereum]);
 
   useEffect(() => {
     (async function () {
@@ -17,31 +40,38 @@ function FundMe() {
         const networkConfig = await provider.getNetwork();
         const chainId = networkConfig.chainId;
         const contractAddress = contractAddresses[Number(chainId)];
-        console.log(contractAddress);
         const signer = await provider.getSigner();
         if (contractAddress) {
-          contract = new ethers.Contract(contractAddress, abi, signer);
-          // contractOwner = await contract.getOwner();
-          contractBalance = Number(await provider.getBalance(contractAddress));
-          console.log(
-            await contract.s_addressToAmountFunded(
-              "0xE959A2c1c3F108697c244b98C71803b6DcD77764"
-            )
+          let contract = new ethers.Contract(contractAddress, abi, signer);
+          setData((prev) => ({ ...prev, contract }));
+          let tempOwner = await contract.getOwner();
+          let tempBalance = Number(await provider.getBalance(contractAddress));
+          setData({ ...data, contractBalance: tempBalance });
+          setData({ ...data, contractOwner: tempOwner });
+          let allFunders = await contract.getAllFunders();
+          let temp1 = await Promise.all(
+            allFunders.map(async (funder) => {
+              let fundedAmt = await contract.s_addressToAmountFunded(funder);
+              return { [funder]: fundedAmt };
+            })
           );
-          // setFunders(await contract.s_addressToAmountFunded);
-          console.log({ chainId, contractAddress, contractBalance });
         }
       } else {
         console.log("install metamask extension");
       }
     })();
-  });
+  }, []);
+  console.log(data);
 
   async function Fund() {
-    const transactionResponse = await contract.fund({
-      value: ethers.parseEther(fundAmt),
-    });
-    console.log(Number(ethers.parseEther(fundAmt)) / 10 ** 18);
+    try {
+      const transactionResponse = await contract.fund({
+        value: ethers.parseEther(fundAmt),
+      });
+    } catch (err) {
+      console.log({ err });
+      alert(err.shortMessage);
+    }
   }
   async function Withdraw() {
     const transactionResponse = await contract.withdraw();
@@ -49,10 +79,11 @@ function FundMe() {
   }
 
   return (
-    <div className=" flex flex-col gap-3">
+    <div className=" flex flex-col gap-4">
+      <p className=" text-end ">connectedAccount : {connectedAccount}</p>
       <h1 className=" text-center font-bold text-green-600 "> FundMe </h1>
       <p> contract Balance : {contractBalance}</p>
-      {/* <p> contract Owner : {contractOwner}</p> */}
+      <p> contract Owner : {contractOwner}</p>
       <div className="flex gap-3  align-middle">
         <input
           type="text"
@@ -77,6 +108,9 @@ function FundMe() {
       <div>
         {" "}
         <h1>Funders History</h1> <p></p>
+        {addressToAmtFunded?.forEach((obj) => (
+          <p> {Object.keys(obj)[0]}</p>
+        ))}
       </div>
     </div>
   );
