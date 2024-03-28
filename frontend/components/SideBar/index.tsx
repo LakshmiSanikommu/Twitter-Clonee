@@ -6,12 +6,14 @@ import { FiMail } from "react-icons/fi";
 import { BsBookmark, BsCardList } from "react-icons/bs";
 import { HiOutlineUser } from "react-icons/hi";
 import { CgMoreO } from "react-icons/cg";
+import { CiWallet } from "react-icons/ci";
 import SideBarItem from "./SideBarItem";
 import Link from "next/link";
 import { tweetBoxModal } from "../../Redux/features/GlobalSlice";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
+import { FaDonate } from "react-icons/fa";
 
 function SideBar() {
   const { data: session } = useSession();
@@ -30,17 +32,19 @@ function SideBar() {
         </Link>
 
         <SideBarItem Icon={AiOutlineHome} text="Home" />
-        <SideBarItem Icon={IoSearch} text="Search" />
-        <SideBarItem Icon={BiHash} text="Explore" />
-        <SideBarItem Icon={IoNotificationsOutline} text="Notifications" />
+        {/* <SideBarItem Icon={IoSearch} text="Search" /> */}
+        {/* <SideBarItem Icon={BiHash} text="Explore" /> */}
+        {/* <SideBarItem Icon={IoNotificationsOutline} text="Notifications" /> */}
         <SideBarItem Icon={FiMail} text="Messages" />
-        <SideBarItem Icon={BsBookmark} text="Bookmarks" />
-        <SideBarItem Icon={BsCardList} text="Lists" />
+        {/* <SideBarItem Icon={BsBookmark} text="Bookmarks" /> */}
+        {/* <SideBarItem Icon={BsCardList} text="Lists" /> */}
         <SideBarItem Icon={HiOutlineUser} text="Profile" />
-        <SideBarItem Icon={CgMoreO} text="More" />
+        {/* <SideBarItem Icon={CgMoreO} text="More" /> */}
+        <SideBarItem Icon={FaDonate} text="FundMe" />
+        <SideBarItem Icon={CiWallet} text="Wallet" />
         <div
           onClick={() => dispatch(tweetBoxModal())}
-          className=" tweetButton "
+          className=" tweetButton mt-5 "
         >
           Tweet
         </div>
